@@ -4,3 +4,5 @@
 /.shards/
 *.dwarf
 examples/canvas_projectile.ppm
+examples/canvas_projectile
+examples/projectile

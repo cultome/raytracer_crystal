@@ -27,24 +27,25 @@ module RayTracer
     end
 
     def to_ppm
-      content = "P3\n#{width} #{height}\n255\n"
+      content = IO::Memory.new
+      content << "P3\n#{width} #{height}\n255\n"
 
       pixels.reverse.each do |row|
-        line = ""
+        line = IO::Memory.new
 
         row.flat_map(&.to_i).map(&.to_s).each do |color|
           if color.size + line.size > 70
-            content += line.strip + "\n"
-            line = ""
+            content << "#{line.to_s.strip}\n"
+            line = IO::Memory.new
           end
 
-          line += color + " "
+          line << color + " "
         end
 
-        content += line.strip + "\n"
+        content << "#{line.to_s.strip}\n"
       end
 
-      content.chomp
+      content.to_s.chomp
     end
   end
 end
