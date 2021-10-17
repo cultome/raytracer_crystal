@@ -1,8 +1,8 @@
-require "./spec_helper"
+require "../spec_helper"
 
 include RayTracer
 
-describe RayTracer do
+describe RayTracer::Tuple do
   it "A tuple with w=1.0 is a point" do
     a = tuple(4.3, -4.2, 3.1, 1.0)
     a.x.should eq 4.3
