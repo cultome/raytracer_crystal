@@ -3,35 +3,74 @@ module RayTracer
 
   alias Numeric = Float64 | Int32
 
-  struct Point
+  struct Tuple
     property x, y, z, w
 
-    def initialize(@x : Numeric, @y : Numeric, @z : Numeric)
-      @w = 1
+    def initialize(@x : Numeric, @y : Numeric, @z : Numeric, @w : Numeric)
     end
-  end
 
-  struct Vector
-    property x, y, z, w
+    def vector?
+      w == 0
+    end
 
-    def initialize(@x : Numeric, @y : Numeric, @z : Numeric)
-      @w = 0
+    def point?
+      w == 1
+    end
+
+    def +(tp : Tuple)
+      self.class.new x + tp.x, y + tp.y, z + tp.z, w + tp.w
+    end
+
+    def -(tp : Tuple)
+      self.class.new x - tp.x, y - tp.y, z - tp.z, w - tp.w
+    end
+
+    def -
+      self.class.new -x, -y, -z, -w
+    end
+
+    def *(scalar : Numeric)
+      self.class.new x * scalar, y * scalar, z * scalar, w * scalar
+    end
+
+    def /(scalar : Numeric)
+      self * (1 / scalar)
+    end
+
+    def magnitude
+      Math.sqrt(x * x + y * y + z * z + w * w)
+    end
+
+    def normalize
+      m = 1 / magnitude
+
+      self.class.new x * m, y * m, z * m, w * m
+    end
+
+    # scalar_product, inner_product, dot_product
+    def dot(tp : Tuple)
+      x * tp.x + y * tp.y + z * tp.z + w * tp.w
+    end
+
+    def cross(tp : Tuple)
+      self.class.new(
+        y * tp.z - z * tp.y,
+        z * tp.x - x * tp.z,
+        x * tp.y - y * tp.x,
+        0
+      )
     end
   end
 
   def point(x, y, z)
-    Point.new(x, y, z)
+    Tuple.new(x, y, z, 1)
   end
 
   def vector(x, y, z)
-    Vector.new(x, y, z)
+    Tuple.new(x, y, z, 0)
   end
 
   def tuple(x, y, z, w)
-    if w == 0
-      vector(x, y, z)
-    else
-      point(x, y, z)
-    end
+    Tuple.new(x, y, z, w)
   end
 end
