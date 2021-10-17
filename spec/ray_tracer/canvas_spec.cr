@@ -50,9 +50,9 @@ describe RayTracer::Canvas do
     c.to_ppm.split("\n")[3...7].join("|").should eq result
   end
 
-  #it "PPM files are terminated by a newline character" do
-    #Given c ← canvas(5, 3)
-    #When ppm ← canvas_to_ppm(c)
-    #Then ppm ends with a newline character
-  #end
+  it "PPM files are terminated by a newline character" do
+    c = canvas(5, 3)
+    ppm = c.to_ppm
+    ppm.ends_with? "\n"
+  end
 end

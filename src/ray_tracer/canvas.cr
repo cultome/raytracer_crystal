@@ -29,7 +29,7 @@ module RayTracer
     def to_ppm
       content = "P3\n#{width} #{height}\n255\n"
 
-      colors = pixels.each do |row|
+      pixels.reverse.each do |row|
         line = ""
 
         row.flat_map(&.to_i).map(&.to_s).each do |color|
