@@ -12,14 +12,14 @@ end
 struct Environment
   property gravity, wind
 
-  def initialize(@gravity : RayTracer::Tuple, @wind : RayTracer::Tuple)
+  def initialize(@gravity : RayTracer::Vector, @wind : RayTracer::Vector)
   end
 end
 
 struct Projectile
   property position, velocity
 
-  def initialize(@position : RayTracer::Tuple, @velocity : RayTracer::Tuple)
+  def initialize(@position : RayTracer::Point, @velocity : RayTracer::Vector)
   end
 
   def y

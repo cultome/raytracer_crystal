@@ -142,4 +142,11 @@ describe RayTracer::Tuple do
     a.cross(b).should eq vector(-1, 2, -1)
     b.cross(a).should eq vector(1, -2, 1)
   end
+
+  it "Colors are (red, green, blue) tuples" do
+    c = color(-0.5, 0.4, 1.7)
+    c.red.should eq -0.5
+    c.green.should eq 0.4
+    c.blue.should eq 1.7
+  end
 end

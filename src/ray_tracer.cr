@@ -4,15 +4,19 @@ module RayTracer
   alias Numeric = Float64 | Int32
 
   def point(x, y, z)
-    Tuple.new(x, y, z, 1)
+    Point.new(x, y, z)
   end
 
   def vector(x, y, z)
-    Tuple.new(x, y, z, 0)
+    Vector.new(x, y, z)
   end
 
   def tuple(x, y, z, w)
     Tuple.new(x, y, z, w)
+  end
+
+  def color(r, g, b)
+    Color.new(r, g, b)
   end
 end
 
