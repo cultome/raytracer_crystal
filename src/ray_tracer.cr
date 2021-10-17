@@ -22,7 +22,17 @@ module RayTracer
   def canvas(width, height, color = RayTracer::Color.new(0, 0, 0))
     Canvas.new width, height, color
   end
+
+  def identity_matrix
+    Matrix.new([
+      [1, 0, 0, 0],
+      [0, 1, 0, 0],
+      [0, 0, 1, 0],
+      [0, 0, 0, 1],
+    ])
+  end
 end
 
 require "./ray_tracer/tuple"
+require "./ray_tracer/matrix"
 require "./ray_tracer/canvas"

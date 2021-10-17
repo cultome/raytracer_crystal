@@ -30,7 +30,7 @@ module RayTracer
       content = IO::Memory.new
       content << "P3\n#{width} #{height}\n255\n"
 
-      pixels.reverse.each do |row|
+      pixels.each do |row|
         line = IO::Memory.new
 
         row.flat_map(&.to_i).map(&.to_s).each do |color|
