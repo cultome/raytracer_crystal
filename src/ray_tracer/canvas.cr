@@ -1,0 +1,50 @@
+module RayTracer
+  class Canvas
+    property width, height, pixels
+
+    @pixels : Array(Array(RayTracer::Color))
+
+    def initialize(@width : Numeric, @height : Numeric, default_color)
+      default_color = RayTracer::Color.new(0, 0, 0) if default_color.nil?
+
+      @pixels = Array.new(height) { Array.new(width) { default_color } }
+    end
+
+    def each
+      pixels.each_with_index do |row, y|
+        row.each_with_index do |pixel, x|
+          yield x, y, pixel
+        end
+      end
+    end
+
+    def write_pixel(x : Int32, y : Int32, color : RayTracer::Color)
+      pixels[y][x] = color
+    end
+
+    def pixel_at(x, y) : RayTracer::Color
+      pixels[y][x]
+    end
+
+    def to_ppm
+      content = "P3\n#{width} #{height}\n255\n"
+
+      colors = pixels.each do |row|
+        line = ""
+
+        row.flat_map(&.to_i).map(&.to_s).each do |color|
+          if color.size + line.size > 70
+            content += line.strip + "\n"
+            line = ""
+          end
+
+          line += color + " "
+        end
+
+        content += line.strip + "\n"
+      end
+
+      content.chomp
+    end
+  end
+end

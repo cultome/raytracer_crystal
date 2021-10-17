@@ -30,7 +30,7 @@ module RayTracer
     end
 
     def -
-        self.class.new -x, -y, -z, -w
+      self.class.new -x, -y, -z, -w
     end
 
     def *(scalar : Numeric)
@@ -96,6 +96,19 @@ module RayTracer
 
     def *(c : Color)
       self.class.new x * c.x, y * c.y, z * c.z
+    end
+
+    def to_i
+      [valid_int(red), valid_int(green), valid_int(blue)]
+    end
+
+    private def valid_int(val)
+      t = (255 * val).ceil
+
+      t = 255 if t > 255
+      t = 0 if t < 0
+
+      t.to_i
     end
   end
 end

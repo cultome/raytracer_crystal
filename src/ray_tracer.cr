@@ -18,6 +18,11 @@ module RayTracer
   def color(r, g, b)
     Color.new(r, g, b)
   end
+
+  def canvas(width, height, color = RayTracer::Color.new(0, 0, 0))
+    Canvas.new width, height, color
+  end
 end
 
 require "./ray_tracer/tuple"
+require "./ray_tracer/canvas"
