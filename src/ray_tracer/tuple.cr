@@ -78,7 +78,7 @@ module RayTracer
   end
 
   class Color < Tuple
-    def initialize(r, g, b, w = -1)
+    def initialize(r, g, b, w = 0)
       super r, g, b, w
     end
 
@@ -92,6 +92,10 @@ module RayTracer
 
     def blue
       z
+    end
+
+    def *(c : Color)
+      self.class.new x * c.x, y * c.y, z * c.z
     end
   end
 end

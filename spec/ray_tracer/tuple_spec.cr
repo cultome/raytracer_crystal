@@ -87,66 +87,101 @@ describe RayTracer::Tuple do
     (a / 2).should eq tuple(0.5, -1, 1.5, -2)
   end
 
-  it "Computing the magnitude of vector(1, 0, 0)" do
-    v = vector(1, 0, 0)
-    v.magnitude.should eq 1
+  context Vector do
+    it "Computing the magnitude of vector(1, 0, 0)" do
+      v = vector(1, 0, 0)
+      v.magnitude.should eq 1
+    end
+
+    it "Computing the magnitude of vector(0, 1, 0)" do
+      v = vector(0, 1, 0)
+      v.magnitude.should eq 1
+    end
+
+    it "Computing the magnitude of vector(0, 0, 1)" do
+      v = vector(0, 0, 1)
+      v.magnitude.should eq 1
+    end
+
+    it "Computing the magnitude of vector(1, 2, 3)" do
+      v = vector(1, 2, 3)
+      v.magnitude.should eq Math.sqrt(14)
+    end
+
+    it "Computing the magnitude of vector(-1, -2, -3)" do
+      v = vector(-1, -2, -3)
+      v.magnitude.should eq Math.sqrt(14)
+    end
+
+    it "Normalizing vector(4, 0, 0) gives (1, 0, 0)" do
+      v = vector(4, 0, 0)
+      v.normalize.should eq vector(1, 0, 0)
+    end
+
+    it "Normalizing vector(1, 2, 3)" do
+      v = vector(1, 2, 3) # vector(1/√14, 2/√14, 3/√14)
+      norm = v.normalize
+      norm.x.should be_close 0.26726, 0.00001
+      norm.y.should be_close 0.53452, 0.00001
+      norm.z.should be_close 0.80178, 0.00001
+    end
+
+    it "The magnitude of a normalized vector" do
+      v = vector(1, 2, 3)
+      v.normalize.magnitude.should eq 1
+    end
+
+    it "The dot product of two tuples" do
+      a = vector(1, 2, 3)
+      b = vector(2, 3, 4)
+      a.dot(b).should eq 20
+    end
+
+    it "The cross product of two vectors" do
+      a = vector(1, 2, 3)
+      b = vector(2, 3, 4)
+      a.cross(b).should eq vector(-1, 2, -1)
+      b.cross(a).should eq vector(1, -2, 1)
+    end
   end
 
-  it "Computing the magnitude of vector(0, 1, 0)" do
-    v = vector(0, 1, 0)
-    v.magnitude.should eq 1
-  end
+  context Color do
+    it "Colors are (red, green, blue) tuples" do
+      c = color(-0.5, 0.4, 1.7)
+      c.red.should eq -0.5
+      c.green.should eq 0.4
+      c.blue.should eq 1.7
+    end
 
-  it "Computing the magnitude of vector(0, 0, 1)" do
-    v = vector(0, 0, 1)
-    v.magnitude.should eq 1
-  end
+    it "Adding colors" do
+      c1 = color(0.9, 0.6, 0.75)
+      c2 = color(0.7, 0.1, 0.25)
+      (c1 + c2).should eq color(1.6, 0.7, 1.0)
+    end
 
-  it "Computing the magnitude of vector(1, 2, 3)" do
-    v = vector(1, 2, 3)
-    v.magnitude.should eq Math.sqrt(14)
-  end
+    it "Subtracting colors" do
+      c1 = color(0.9, 0.6, 0.75)
+      c2 = color(0.7, 0.1, 0.25)
+      r = c1 - c2
 
-  it "Computing the magnitude of vector(-1, -2, -3)" do
-    v = vector(-1, -2, -3)
-    v.magnitude.should eq Math.sqrt(14)
-  end
+      r.red.should be_close 0.2, 0.1
+      r.green.should be_close 0.5, 0.1
+      r.blue.should be_close 0.5, 0.1
+    end
 
-  it "Normalizing vector(4, 0, 0) gives (1, 0, 0)" do
-    v = vector(4, 0, 0)
-    v.normalize.should eq vector(1, 0, 0)
-  end
+    it "Multiplying a color by a scalar" do
+      c = color(0.2, 0.3, 0.4)
+      (c * 2).should eq color(0.4, 0.6, 0.8)
+    end
 
-  it "Normalizing vector(1, 2, 3)" do
-    v = vector(1, 2, 3) # vector(1/√14, 2/√14, 3/√14)
-    norm = v.normalize
-    norm.x.should be_close 0.26726, 0.00001
-    norm.y.should be_close 0.53452, 0.00001
-    norm.z.should be_close 0.80178, 0.00001
-  end
+    it "Multiplying colors" do
+      c1 = color(1, 0.2, 0.4)
+      c2 = color(0.9, 1, 0.1)
+      r = c1 * c2
 
-  it "The magnitude of a normalized vector" do
-    v = vector(1, 2, 3)
-    v.normalize.magnitude.should eq 1
-  end
-
-  it "The dot product of two tuples" do
-    a = vector(1, 2, 3)
-    b = vector(2, 3, 4)
-    a.dot(b).should eq 20
-  end
-
-  it "The cross product of two vectors" do
-    a = vector(1, 2, 3)
-    b = vector(2, 3, 4)
-    a.cross(b).should eq vector(-1, 2, -1)
-    b.cross(a).should eq vector(1, -2, 1)
-  end
-
-  it "Colors are (red, green, blue) tuples" do
-    c = color(-0.5, 0.4, 1.7)
-    c.red.should eq -0.5
-    c.green.should eq 0.4
-    c.blue.should eq 1.7
+      r.red.should be_close 0.9, 0.1
+      r.green.should be_close 0.2, 0.1
+      r.blue.should be_close 0.04, 0.1
+    end
   end
 end
