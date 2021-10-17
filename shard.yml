@@ -5,8 +5,10 @@ authors:
   - Carlos Soria <csoria@cultome.io>
 
 targets:
-  ray_tracer:
-    main: src/ray_tracer.cr
+  canvas_projectile:
+    main: examples/canvas_projectile.cr
+  projectile:
+    main: examples/projectile.cr
 
 crystal: 1.2.0
 
