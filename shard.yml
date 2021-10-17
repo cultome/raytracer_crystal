@@ -9,6 +9,8 @@ targets:
     main: examples/canvas_projectile.cr
   projectile:
     main: examples/projectile.cr
+  matrices:
+    main: examples/matrices.cr
 
 crystal: 1.2.0
 
