@@ -36,4 +36,10 @@ describe RayTracer do
 
     v1.should eq v2
   end
+
+  it "Adding two tuples" do
+    a1 = tuple(3, -2, 5, 1)
+    a2 = tuple(-2, 3, 1, 0)
+    (a1 + a2).should eq tuple(1, 1, 6, 1)
+  end
 end
