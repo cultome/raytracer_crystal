@@ -1,0 +1,13 @@
+name: ray_tracer
+version: 0.1.0
+
+authors:
+  - Carlos Soria <csoria@cultome.io>
+
+targets:
+  ray_tracer:
+    main: src/ray_tracer.cr
+
+crystal: 1.2.0
+
+license: MIT
