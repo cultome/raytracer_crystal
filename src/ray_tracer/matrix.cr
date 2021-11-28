@@ -32,8 +32,6 @@ module RayTracer
           row[1] * mt[1, x] +
           row[2] * mt[2, x] +
           row[3] * mt[3, x]
-          # multiple dimensions: multiply A row x B column
-          #row.map_with_index { |row_val, idx| row_val * mt.data[idx][x].to_f }.sum
         end
       end
 
