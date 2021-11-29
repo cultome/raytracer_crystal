@@ -113,64 +113,80 @@ describe RayTracer do
     full_r.z.should be_close 0, 0.00001
   end
 
-  #it "A shearing transformation moves x in proportion to y" do
-    #transform = shearing(1, 0, 0, 0, 0, 0)
-    #p = point(2, 3, 4)
-    #(transform * p).should eq point(5, 3, 4)
-  #end
+  it "A shearing transformation moves x in proportion to y" do
+    transform = shearing(1, 0, 0, 0, 0, 0)
+    p = point(2, 3, 4)
+    result = transform * p
 
-  #it "A shearing transformation moves x in proportion to z" do
-    #transform = shearing(0, 1, 0, 0, 0, 0)
-    #p = point(2, 3, 4)
-    #(transform * p).should eq point(6, 3, 4)
-  #end
+    (transform * p).should eq point(5, 3, 4)
+  end
 
-  #it "A shearing transformation moves y in proportion to x" do
-    #transform = shearing(0, 0, 1, 0, 0, 0)
-    #p = point(2, 3, 4)
-    #(transform * p).should eq point(2, 5, 4)
-  #end
+  it "A shearing transformation moves x in proportion to z" do
+    transform = shearing(0, 1, 0, 0, 0, 0)
+    p = point(2, 3, 4)
 
-  #it "A shearing transformation moves y in proportion to z" do
-    #transform = shearing(0, 0, 0, 1, 0, 0)
-    #p = point(2, 3, 4)
-    #(transform * p).should eq point(2, 7, 4)
-  #end
+    (transform * p).should eq point(6, 3, 4)
+  end
 
-  #it "A shearing transformation moves z in proportion to x" do
-    #transform = shearing(0, 0, 0, 0, 1, 0)
-    #p = point(2, 3, 4)
-    #(transform * p).should eq point(2, 3, 6)
-  #end
+  it "A shearing transformation moves y in proportion to x" do
+    transform = shearing(0, 0, 1, 0, 0, 0)
+    p = point(2, 3, 4)
 
-  #it "A shearing transformation moves z in proportion to y" do
-    #transform = shearing(0, 0, 0, 0, 0, 1)
-    #p = point(2, 3, 4)
-    #(transform * p).should eq point(2, 3, 7)
-  #end
+    (transform * p).should eq point(2, 5, 4)
+  end
 
-  #it "Individual transformations are applied in sequence" do
-    #p = point(1, 0, 1)
-  #a = rotation_x(Math::PI / 2)
-    #b = scaling(5, 5, 5)
-  #c = translation(10, 5, 7)
-    ## apply rotation first
-    #p2 = a * p
-    #(p2).should eq point(1, -1, 0)
-    ## then apply scaling
-    #p3 = b * p2
-    #(p3).should eq point(5, -5, 0)
-    ## then apply translation
-    #p4 = c * p3
-    #(p4).should eq point(15, 0, 7)
-  #end
+  it "A shearing transformation moves y in proportion to z" do
+    transform = shearing(0, 0, 0, 1, 0, 0)
+    p = point(2, 3, 4)
 
-  #it "Chained transformations must be applied in reverse order" do
-    #p = point(1, 0, 1)
-  #a = rotation_x(Math::PI / 2)
-    #b = scaling(5, 5, 5)
-  #c = translation(10, 5, 7)
-    #t = c * b * a
-    #(t * p).should eq point(15, 0, 7)
-  #end
+    (transform * p).should eq point(2, 7, 4)
+  end
+
+  it "A shearing transformation moves z in proportion to x" do
+    transform = shearing(0, 0, 0, 0, 1, 0)
+    p = point(2, 3, 4)
+
+    (transform * p).should eq point(2, 3, 6)
+  end
+
+  it "A shearing transformation moves z in proportion to y" do
+    transform = shearing(0, 0, 0, 0, 0, 1)
+    p = point(2, 3, 4)
+
+    (transform * p).should eq point(2, 3, 7)
+  end
+
+  it "Individual transformations are applied in sequence" do
+    p = point(1, 0, 1)
+    a = rotation(Axis::X, Math::PI / 2)
+    b = scaling(5, 5, 5)
+    c = translation(10, 5, 7)
+
+    # apply rotation first
+    p2 = a * p
+    p2.x.should be_close 1, 0.00001
+    p2.y.should be_close -1, 0.00001
+    p2.z.should be_close 0, 0.00001
+
+    # then apply scaling
+    p3 = b * p2
+    p3.x.should be_close 5, 0.00001
+    p3.y.should be_close -5, 0.00001
+    p3.z.should be_close 0, 0.00001
+
+    # then apply translation
+    p4 = c * p3
+    p4.x.should be_close 15, 0.00001
+    p4.y.should be_close 0, 0.00001
+    p4.z.should be_close 7, 0.00001
+  end
+
+  it "Chained transformations must be applied in reverse order" do
+    p = point(1, 0, 1)
+    a = rotation(Axis::X, Math::PI / 2)
+    b = scaling(5, 5, 5)
+    c = translation(10, 5, 7)
+    t = c * b * a
+    (t * p).should eq point(15, 0, 7)
+  end
 end

@@ -82,6 +82,15 @@ module RayTracer
       raise "Invalid axis #{axis}"
     end
   end
+
+  def shearing(x2y : Numeric, x2z : Numeric, y2x : Numeric, y2z : Numeric, z2x : Numeric, z2y : Numeric) : RayTracer::Matrix
+    Matrix.new([
+      [1,   x2y, x2z, 0],
+      [y2x, 1,   y2z, 0],
+      [z2x, z2y, 1,   0],
+      [0,   0,   0,   1],
+    ])
+  end
 end
 
 require "./ray_tracer/tuple"
